@@ -13,6 +13,9 @@
 
 ## 快速开始
 
+提供两条安装路径——**DSH CLI（npm）** 与 **Windows PowerShell installer**
+（详见 [安装](#安装)）。Windows installer 流程如下：
+
 1. **安装**（Windows）：
 
    ```powershell
@@ -54,6 +57,39 @@
 
 ## 安装
 
+### 方式一：使用 DSH CLI 从 npm 安装
+
+Web profile：
+
+```bash
+dsh plugin --profile web add dsh-web-search-anysearch
+```
+
+Headless profile：
+
+```bash
+dsh plugin --profile headless add dsh-web-search-anysearch
+```
+
+该命令会安装并注册 AnySearch bundle，但**不会自动把当前 Web 搜索提供方切换为 AnySearch**。
+安装后还需要在目标 profile 的 `cordis.patch.yml` 中加入：
+
+```yaml
+- id: web
+  config:
+    searchProvider: anysearch
+```
+
+然后重启 DeepSeek Harness。
+
+> 如果在 Windows 上 `dsh plugin add` 找不到 `pnpm`，请使用下面的 PowerShell installer——
+> 它会定位 DeepSeek Harness 自带的 Node/corepack 环境。
+
+该包已发布到 npm：
+[`dsh-web-search-anysearch`](https://www.npmjs.com/package/dsh-web-search-anysearch)。
+
+### 方式二：Windows PowerShell installer
+
 安装脚本只修改目标 profile 的 `package.json`（加一个 `link:` 依赖）和 `cordis.patch.yml`
 （注册并选中 Provider）。它会先备份这两个文件，且幂等——重复运行不会产生重复条目。
 
@@ -63,6 +99,8 @@
 .\scripts\install.ps1 -Both      # 两个 profile（默认）
 .\scripts\install.ps1 -Web -DryRun   # 只预览改动，不写入
 ```
+
+installer 还会自动设置 `searchProvider: anysearch`，因此无需手动编辑 patch。
 
 ### 手动安装
 
@@ -148,6 +186,18 @@ AnySearch /v1/search
 两者均已端到端实测。
 
 ## 卸载
+
+### npm / DSH CLI
+
+```bash
+dsh plugin --profile web remove dsh-web-search-anysearch    # 或 --profile headless
+```
+
+这会移除 npm 依赖和 bundle 注册。如果你手动在 profile 的 `cordis.patch.yml` 里加了
+`searchProvider: anysearch` 覆盖，需要一并手动删除——DSH CLI 的 `remove` 命令不会删除
+用户自己写的 patch 条目。
+
+### Windows PowerShell uninstaller
 
 ```powershell
 .\scripts\uninstall.ps1 -Web     # 或 -Headless / -Both

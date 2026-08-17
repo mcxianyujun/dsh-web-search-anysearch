@@ -14,6 +14,9 @@ Harness. No Harness core source is modified.
 
 ## Quick start
 
+Two install paths are available — the **DSH CLI (npm)** route and the **Windows PowerShell
+installer** (see [Installation](#installation)). The Windows installer flow is:
+
 1. **Install** (Windows):
 
    ```powershell
@@ -58,6 +61,40 @@ Harness. No Harness core source is modified.
 
 ## Installation
 
+### Option 1 — Install from npm with the DSH CLI
+
+Install the bundle for the Web profile:
+
+```bash
+dsh plugin --profile web add dsh-web-search-anysearch
+```
+
+For Headless:
+
+```bash
+dsh plugin --profile headless add dsh-web-search-anysearch
+```
+
+This installs and registers the AnySearch bundle, but does **not** automatically change the active
+Web search provider. To enable AnySearch, add the following override to the target profile's
+`cordis.patch.yml`:
+
+```yaml
+- id: web
+  config:
+    searchProvider: anysearch
+```
+
+Then restart DeepSeek Harness.
+
+> If `dsh plugin add` cannot find `pnpm` on Windows, use the PowerShell installer below — it locates
+> the Node/corepack environment bundled with DeepSeek Harness.
+
+The package is published on npm as
+[`dsh-web-search-anysearch`](https://www.npmjs.com/package/dsh-web-search-anysearch).
+
+### Option 2 — Windows PowerShell installer
+
 The installer modifies only the target profile's `package.json` (adds a `link:` dependency) and
 `cordis.patch.yml` (registers the provider and selects it). It backs up both files first and is
 idempotent — re-running it does not duplicate entries.
@@ -68,6 +105,8 @@ idempotent — re-running it does not duplicate entries.
 .\scripts\install.ps1 -Both      # both profiles (default)
 .\scripts\install.ps1 -Web -DryRun   # preview changes without writing
 ```
+
+The installer also sets `searchProvider: anysearch` automatically, so no manual patch edit is needed.
 
 ### Manual installation
 
@@ -156,6 +195,18 @@ This is a native Harness `WebSearchProvider`, not an MCP server and not a Skill.
 Both are tested end to end.
 
 ## Uninstall
+
+### npm / DSH CLI
+
+```bash
+dsh plugin --profile web remove dsh-web-search-anysearch    # or --profile headless
+```
+
+This removes the npm dependency and the bundle registration. If you manually added the
+`searchProvider: anysearch` override to the profile's `cordis.patch.yml`, remove that override too —
+the DSH CLI `remove` command does not delete user-authored patch entries.
+
+### Windows PowerShell uninstaller
 
 ```powershell
 .\scripts\uninstall.ps1 -Web     # or -Headless / -Both
