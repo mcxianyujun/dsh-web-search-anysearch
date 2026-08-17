@@ -1,0 +1,17 @@
+node_modules/
+lib/
+coverage/
+*.log
+*.tgz
+tests/
+scripts/
+docs/
+tsdown.config.ts
+pnpm-lock.yaml
+.credentials.yaml
+.env
+.env.*
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
