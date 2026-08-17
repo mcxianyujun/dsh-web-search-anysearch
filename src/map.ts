@@ -1,7 +1,7 @@
 /**
  * Pure AnySearch response mapping and error-shape helpers. Zero runtime
  * dependencies on the Harness - this module is unit-testable standalone.
- * @module @dsh-external/dsh-web-search-anysearch/map
+ * @module dsh-web-search-anysearch/map
  */
 
 /** AnySearch's own success marker in the JSON envelope (`code`). */

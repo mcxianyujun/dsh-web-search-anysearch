@@ -3,4 +3,4 @@
 # install it with `dsh plugin --profile <name> add <path-or-git-url>`.
 - insert:
     - id: web-search-anysearch
-      name: '@dsh-external/dsh-web-search-anysearch'
+      name: 'dsh-web-search-anysearch'

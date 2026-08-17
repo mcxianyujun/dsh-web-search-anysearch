@@ -16,7 +16,7 @@ const profileArg = args.profile ?? 'both';
 const home = resolve(args.home ?? process.env.DSH_HOME ?? join(process.env.USERPROFILE ?? '', '.dsh'));
 const pluginDir = resolve(args.plugin ?? dirname(new URL(import.meta.url).pathname).replace(/\/scripts$/, ''));
 const dryRun = args['dry-run'] === true;
-const PACKAGE_NAME = '@dsh-external/dsh-web-search-anysearch';
+const PACKAGE_NAME = 'dsh-web-search-anysearch';
 
 const profiles = profileArg === 'both' ? ['web', 'headless'] : [profileArg];
 
@@ -33,7 +33,7 @@ function addDependency(manifest) {
   return true;
 }
 
-const PATCH_INSERT = `- insert:\n    - id: web-search-anysearch\n      name: '@dsh-external/dsh-web-search-anysearch'`;
+const PATCH_INSERT = `- insert:\n    - id: web-search-anysearch\n      name: 'dsh-web-search-anysearch'`;
 const PATCH_SELECT = `- id: web\n  config:\n    searchProvider: anysearch`;
 
 /** Idempotently add the two patch entries, returning the new text or null. */

@@ -28,7 +28,7 @@ const fn = new Function('module', 'exports', source);
 fn(moduleObj, moduleObj.exports);
 
 assert.ok(captured, 'bundle must call window.__ModuleLoader__.load');
-assert.equal(captured.id, '@dsh-external/dsh-web-search-anysearch', 'bundle id stamp');
+assert.equal(captured.id, 'dsh-web-search-anysearch', 'bundle id stamp');
 assert.equal(typeof captured.factory, 'function');
 
 const api = captured.factory((spec) => localRequire(spec));

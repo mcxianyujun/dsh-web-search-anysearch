@@ -4,7 +4,17 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
-## [0.1.0] - unreleased
+## [0.1.1] - unreleased
+
+Packaging fixes for npm publication readiness.
+
+### Changed
+
+- Changed the npm package name from `@dsh-external/dsh-web-search-anysearch` to `dsh-web-search-anysearch`.
+- Tightened DSH peer dependency ranges to the `0.1.0-rc.6` working train.
+- Updated installer/uninstaller scripts and the client bundle identity to the new package name.
+
+## [0.1.0]
 
 Initial public release.
 

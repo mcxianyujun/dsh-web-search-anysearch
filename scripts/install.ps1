@@ -12,7 +12,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$PACKAGE = '@dsh-external/dsh-web-search-anysearch'
+$PACKAGE = 'dsh-web-search-anysearch'
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $pluginDir = Split-Path -Parent $scriptDir
 

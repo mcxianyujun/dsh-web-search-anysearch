@@ -77,7 +77,7 @@ For troubleshooting or environments where the script is not used:
 
    ```json
    "dependencies": {
-     "@dsh-external/dsh-web-search-anysearch": "link:/absolute/path/to/dsh-web-search-anysearch"
+     "dsh-web-search-anysearch": "link:/absolute/path/to/dsh-web-search-anysearch"
    }
    ```
 
@@ -86,7 +86,7 @@ For troubleshooting or environments where the script is not used:
    ```yaml
    - insert:
        - id: web-search-anysearch
-         name: '@dsh-external/dsh-web-search-anysearch'
+         name: 'dsh-web-search-anysearch'
    - id: web
      config:
        searchProvider: anysearch
@@ -171,7 +171,7 @@ Installing AnySearch appends a later `searchProvider: anysearch` override that t
 it, and uninstalling deletes that AnySearch override so the earlier configuration takes effect
 again. No separate "previous provider" state file is written.
 
-Manual uninstall: remove the `@dsh-external/dsh-web-search-anysearch` dependency from the profile
+Manual uninstall: remove the `dsh-web-search-anysearch` dependency from the profile
 `package.json`, and remove the AnySearch insert entry and the `searchProvider: anysearch` override
 from `cordis.patch.yml` (leaving any earlier `searchProvider` override in place), then run
 `pnpm install` in the profile directory and restart.

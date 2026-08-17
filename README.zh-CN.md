@@ -72,7 +72,7 @@
 
    ```json
    "dependencies": {
-     "@dsh-external/dsh-web-search-anysearch": "link:/绝对路径/dsh-web-search-anysearch"
+     "dsh-web-search-anysearch": "link:/绝对路径/dsh-web-search-anysearch"
    }
    ```
 
@@ -81,7 +81,7 @@
    ```yaml
    - insert:
        - id: web-search-anysearch
-         name: '@dsh-external/dsh-web-search-anysearch'
+         name: 'dsh-web-search-anysearch'
    - id: web
      config:
        searchProvider: anysearch
@@ -162,7 +162,7 @@ AnySearch /v1/search
 在末尾追加一条 `searchProvider: anysearch` 覆盖、暂时遮蔽原配置；卸载时删除这条 AnySearch 覆盖，
 原配置即重新生效。installer 并不会单独保存一份「previousProvider」状态文件。
 
-手动卸载：从 profile `package.json` 移除 `@dsh-external/dsh-web-search-anysearch` 依赖，从
+手动卸载：从 profile `package.json` 移除 `dsh-web-search-anysearch` 依赖，从
 `cordis.patch.yml` 删除 AnySearch 的 insert 条目与 `searchProvider: anysearch` 覆盖（保留之前
 已有的任何 `searchProvider` 覆盖），然后在 profile 目录执行 `pnpm install` 并重启。
 

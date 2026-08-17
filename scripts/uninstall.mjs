@@ -16,7 +16,7 @@ const args = Object.fromEntries(
 const profileArg = args.profile ?? 'both';
 const home = resolve(args.home ?? process.env.DSH_HOME ?? join(process.env.USERPROFILE ?? '', '.dsh'));
 const dryRun = args['dry-run'] === true;
-const PACKAGE_NAME = '@dsh-external/dsh-web-search-anysearch';
+const PACKAGE_NAME = 'dsh-web-search-anysearch';
 const profiles = profileArg === 'both' ? ['web', 'headless'] : [profileArg];
 
 /**

@@ -1,5 +1,5 @@
 /**
- * Reproducible tsdown preset for @dsh-external/dsh-web-search-anysearch.
+ * Reproducible tsdown preset for dsh-web-search-anysearch.
  *
  * - Node half: `src/index.ts` → `lib/index.js` (ESM; `@deepseek-ai/*` stay
  *   external and resolve from the Harness profile tree at runtime). `map.ts`
@@ -34,7 +34,7 @@ const HOST_EXTERNALS = [
   '@deepseek-ai/schemastery',
 ] as const
 
-const ID = '@dsh-external/dsh-web-search-anysearch'
+const ID = 'dsh-web-search-anysearch'
 
 export default defineConfig([
   {

@@ -1,5 +1,5 @@
 /**
- * Browser half of @dsh-external/dsh-web-search-anysearch.
+ * Browser half of dsh-web-search-anysearch.
  *
  * Registers an independent settings **section** ("Web Search (AnySearch)") into
  * the settings sidebar via the shell-declared `settings.section` slot. This is

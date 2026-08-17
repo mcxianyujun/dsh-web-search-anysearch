@@ -1,6 +1,6 @@
 /**
  * Minimal unit tests for the pure mapping/error helpers of
- * @dsh-external/dsh-web-search-anysearch. Run with `npm test` / `pnpm test`.
+ * dsh-web-search-anysearch. Run with `npm test` / `pnpm test`.
  * No network access is required.
  */
 import { test } from 'node:test';

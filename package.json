@@ -1,7 +1,7 @@
 {
-  "name": "@dsh-external/dsh-web-search-anysearch",
+  "name": "dsh-web-search-anysearch",
   "description": "AnySearch Web Search Provider for DeepSeek Harness: native AnySearch /v1/search, dedicated Web settings section, DSH credentials integration, Web and Headless profile support.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "keywords": [
     "anysearch",
     "deepseek-harness",
@@ -60,20 +60,20 @@
     "node": ">=20"
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis": "^4.0.1",
-    "@deepseek-ai/dsh-credentials": "*",
-    "@deepseek-ai/dsh-launch-environment": "*",
-    "@deepseek-ai/dsh-settings": "*",
-    "@deepseek-ai/dsh-web": "*",
-    "@deepseek-ai/schemastery": "*"
+    "@deepseek-ai/cordis": ">=4.0.1 <5",
+    "@deepseek-ai/dsh-credentials": ">=0.1.0-rc.6 <1",
+    "@deepseek-ai/dsh-launch-environment": ">=0.1.0-rc.6 <1",
+    "@deepseek-ai/dsh-settings": ">=0.1.0-rc.6 <1",
+    "@deepseek-ai/dsh-web": ">=0.1.0-rc.6 <1",
+    "@deepseek-ai/schemastery": ">=3.18.1 <4"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "^4.0.1",
-    "@deepseek-ai/dsh-credentials": "*",
-    "@deepseek-ai/dsh-launch-environment": "*",
-    "@deepseek-ai/dsh-settings": "*",
-    "@deepseek-ai/dsh-web": "*",
-    "@deepseek-ai/schemastery": "*",
+    "@deepseek-ai/cordis": ">=4.0.1 <5",
+    "@deepseek-ai/dsh-credentials": ">=0.1.0-rc.6 <1",
+    "@deepseek-ai/dsh-launch-environment": ">=0.1.0-rc.6 <1",
+    "@deepseek-ai/dsh-settings": ">=0.1.0-rc.6 <1",
+    "@deepseek-ai/dsh-web": ">=0.1.0-rc.6 <1",
+    "@deepseek-ai/schemastery": ">=3.18.1 <4",
     "@types/react": "^19.0.0",
     "react": "^19.0.0",
     "tsdown": "^0.22.14"

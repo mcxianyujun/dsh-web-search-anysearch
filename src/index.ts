@@ -1,5 +1,5 @@
 /**
- * @dsh-external/dsh-web-search-anysearch - an independent AnySearch-backed
+ * dsh-web-search-anysearch - an independent AnySearch-backed
  * WebSearchProvider for the DeepSeek Harness web capability seam (`ctx.web`).
  *
  * AnySearch is a plain search API: `POST {baseURL}/v1/search` with
@@ -267,7 +267,7 @@ function isAbortError(error: unknown): boolean {
  * a JSON body, and maps the JSON envelope's `data.results[]` into the seam's
  * normalized `WebSearchResult`. Credentials refs are independent of
  * `DEEPSEEK_API_KEY` (default `ANYSEARCH_API_KEY`).
- * @module @dsh-external/dsh-web-search-anysearch
+ * @module dsh-web-search-anysearch
  */
 /** Cordis plugin name used by loader diagnostics. */
 export const name = 'web-search-anysearch';
