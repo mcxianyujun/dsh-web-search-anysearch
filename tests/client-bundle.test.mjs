@@ -34,5 +34,9 @@ assert.equal(typeof captured.factory, 'function');
 const api = captured.factory((spec) => localRequire(spec));
 assert.equal(typeof api.apply, 'function', 'apply must be exported');
 assert.ok(Array.isArray(api.inject), 'inject must be an array');
-assert.deepEqual([...api.inject].sort(), ['connection', 'locale', 'remote', 'slots'], 'inject must name the cordis services');
-console.log('OK: client bundle exports apply + inject=[slots, locale, connection, remote]');
+assert.deepEqual(
+  [...api.inject].sort(),
+  ['locale', 'remote', 'remote.credentials', 'slots'],
+  'inject must name the cordis services, including the credentials namespace',
+);
+console.log('OK: client bundle exports apply + inject=[slots, locale, remote, remote.credentials]');

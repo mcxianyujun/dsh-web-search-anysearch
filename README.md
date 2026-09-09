@@ -52,7 +52,7 @@ installer** (see [Installation](#installation)). The Windows installer flow is:
 
 ## Requirements
 
-- [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) with a `web` and/or
+- [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) `>= 0.1.2-rc.1` with a `web` and/or
   `headless` profile. **Tested with the DeepSeek Harness desktop install (Node 24 / pnpm via
   corepack).**
 - An [AnySearch](https://anysearch.com) API key (optional for low-rate anonymous use; recommended

@@ -50,7 +50,7 @@
 
 ## 环境要求
 
-- [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)，带 `web` 和/或 `headless`
+- [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) `>= 0.1.2-rc.1`，带 `web` 和/或 `headless`
   profile。**已在 DeepSeek Harness 桌面版（Node 24 / 自带 corepack pnpm）实测。**
 - 一个 [AnySearch](https://anysearch.com) API Key（低额度匿名使用可不配 Key；建议配置以保证稳定）。
 - 构建需要 Node.js `>= 20` 与 `pnpm`（Harness 桌面版自带）。

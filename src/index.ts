@@ -23,7 +23,7 @@
  */
 import z from '@deepseek-ai/schemastery';
 import { credentialRef } from '@deepseek-ai/dsh-credentials';
-import { installSettingsSection, settingsNamespace } from '@deepseek-ai/dsh-settings';
+import type {} from '@deepseek-ai/dsh-settings';
 import { launchEnvironmentOf } from '@deepseek-ai/dsh-launch-environment';
 import { WebError } from '@deepseek-ai/dsh-web';
 import {
@@ -292,16 +292,26 @@ export const Config = z.object({
 });
 
 /** Settings namespace carrying this provider's endpoint, key reference, and optional request fields. */
-export const WEB_SEARCH_ANYSEARCH_SETTINGS_NAMESPACE = settingsNamespace('web-search-anysearch');
+export const WEB_SEARCH_ANYSEARCH_SETTINGS_NAMESPACE = 'web-search-anysearch';
 
 /** Register the AnySearch search provider with `ctx.web`. */
 export function apply(ctx: import('@deepseek-ai/cordis').Context, config: z.Infer<typeof Config>): void {
   let current: () => z.Infer<typeof Config> = () => config;
-  installSettingsSection(ctx, WEB_SEARCH_ANYSEARCH_SETTINGS_NAMESPACE, Config, config, {
-    setSource: (source) => {
-      current = source;
-    },
-    onChange: () => {},
+  ctx.inject(['settings'], (settingsCtx) => {
+    settingsCtx.settings.installSection(
+      ctx,
+      WEB_SEARCH_ANYSEARCH_SETTINGS_NAMESPACE,
+      Config,
+      config,
+      {
+        setSource: (source) => {
+          current = source;
+        },
+        // The registration carries no resolved value: the provider projects the
+        // section per search, so a committed change needs no re-registration.
+        onChange: () => {},
+      },
+    );
   });
   ctx.web.registerSearchProvider(
     new AnySearchProvider(() => resolveOptions(ctx, current())),

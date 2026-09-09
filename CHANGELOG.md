@@ -4,6 +4,16 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [0.1.2] - 2026-09-08
+
+Compatibility fixes for harness API changes.
+
+### Changed
+
+- Migrated settings registration from the removed `installSettingsSection` / `settingsNamespace` helpers to the current `ctx.settings.installSection` + a plain string namespace, matching the shipped `web-search-deepseek` provider. The package now loads on harness versions that removed the old helpers.
+- Migrated the browser half's credential writes to `ctx.remote.credentials` with positional arguments (`set(ref, value)` / `describe([ref])` / `unset(ref)`), matching the shipped web-search controller, so saving the API key and options is accepted by the current harness.
+- Updated credential invalidation handling to the current `credentials/reference-updated` event, made reset failures visible, and aligned Harness peer requirements with the `0.1.2-rc.1` API line.
+
 ## [0.1.1] - 2026-08-17
 
 Packaging fixes for npm publication readiness.

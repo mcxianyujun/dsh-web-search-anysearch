@@ -19,10 +19,10 @@ function read(rel) {
   return readFileSync(join(root, rel), 'utf8');
 }
 
-test('package.json uses the new unscoped name at version 0.1.1', () => {
+test('package.json uses the new unscoped name at version 0.1.2', () => {
   const pkg = JSON.parse(read('package.json'));
   assert.equal(pkg.name, NEW_NAME, 'name must be unscoped');
-  assert.equal(pkg.version, '0.1.1', 'version must be 0.1.1');
+  assert.equal(pkg.version, '0.1.2', 'version must be 0.1.2');
   assert.ok(!pkg.name.includes('@dsh-external'), 'name must not use the @dsh-external scope');
 });
 

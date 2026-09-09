@@ -103,10 +103,10 @@ const IDLE: Snapshot = { apiKeyConfigured: false, writable: true, saving: false,
 
 /**
  * Register the AnySearch card with the Plugins configuration tab.
- * @param ctx - the browser plugin context (services: slots, locale, connection, remote).
+ * @param ctx - the browser plugin context (services: slots, locale, remote).
  */
 function apply(ctx: any): void {
-  const { api } = ctx.get('connection')
+  const remote = ctx.remote
   const t = ctx.locale.bind(NS)
   let snapshot: Snapshot = { ...IDLE }
   const listeners = new Set<() => void>()
@@ -120,14 +120,14 @@ function apply(ctx: any): void {
 
   /** Ask the credentials domain about the API-key reference state. */
   const refreshCredential = async (): Promise<void> => {
-    let response: any
+    let view: any
     try {
-      response = await api.credentials.describe({ refs: [REFS.apiKey] })
+      const result = await remote.credentials.describe([REFS.apiKey])
+      if (!result.ok) return
+      view = result.value[REFS.apiKey]
     } catch {
       return
     }
-    if (!response.result.ok) return
-    const view = response.result.value.credentials[REFS.apiKey]
     setSnapshot({
       ...snapshot,
       apiKeyConfigured: view?.configured === true,
@@ -140,14 +140,14 @@ function apply(ctx: any): void {
     setSnapshot({ ...snapshot, saving: true, message: '' })
     try {
       if (apiKey.trim().length > 0) {
-        const response = await api.credentials.set({ ref: REFS.apiKey, value: apiKey.trim() })
-        if (!response.result.ok) throw new Error(response.result.error?.message ?? 'credentials.set failed')
+        const result = await remote.credentials.set(REFS.apiKey, apiKey.trim())
+        if (!result.ok) throw new Error(result.error?.message ?? 'credentials.set failed')
       }
       for (const key of FIELD_KEYS) {
         const value = fields[key].trim()
         if (value.length === 0) continue
-        const response = await api.credentials.set({ ref: REFS[key], value })
-        if (!response.result.ok) throw new Error(response.result.error?.message ?? 'credentials.set failed')
+        const result = await remote.credentials.set(REFS[key], value)
+        if (!result.ok) throw new Error(result.error?.message ?? 'credentials.set failed')
       }
       setSnapshot({ ...snapshot, saving: false, message: 'saved' })
     } catch (error) {
@@ -159,14 +159,16 @@ function apply(ctx: any): void {
   /** Remove every stored reference so defaults take over. */
   const reset = async (): Promise<void> => {
     setSnapshot({ ...snapshot, saving: true, message: '' })
+    let failed = false
     for (const ref of Object.values(REFS)) {
       try {
-        await api.credentials.unset({ ref })
+        const result = await remote.credentials.unset(ref)
+        if (!result.ok) failed = true
       } catch {
-        // Best effort; a failure leaves the value in place.
+        failed = true
       }
     }
-    setSnapshot({ ...snapshot, saving: false, message: 'resetDone' })
+    setSnapshot({ ...snapshot, saving: false, message: failed ? 'saveFailed' : 'resetDone' })
     await refreshCredential()
   }
 
@@ -217,10 +219,12 @@ function apply(ctx: any): void {
   )
 
   ctx.effect(
-    () =>
-      ctx.remote.$on('credentials/updated', (ref: string) => {
-        if (ref === REFS.apiKey) refreshCredential()
+    () => [
+      ctx.remote.$on('credentials/reference-updated', (ref: string) => {
+        if (ref === REFS.apiKey) void refreshCredential()
       }),
+      ctx.on('connection/reset', () => void refreshCredential()),
+    ],
     'ui-plugins-anysearch: credential invalidations',
   )
 
@@ -406,6 +410,6 @@ function AnySearchForm(props: any): JSX.Element {
  * every other service below) is undefined in `apply`, and cordis fails the
  * fiber with "Cannot get property \"slots\" without inject".
  */
-const inject = ['slots', 'locale', 'connection', 'remote']
+const inject = ['slots', 'locale', 'remote', 'remote.credentials']
 
 export { apply, inject }
