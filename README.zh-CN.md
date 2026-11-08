@@ -50,8 +50,9 @@
 
 ## 环境要求
 
-- [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) `>= 0.1.2-rc.1`，带 `web` 和/或 `headless`
-  profile。**已在 DeepSeek Harness 桌面版（Node 24 / 自带 corepack pnpm）实测。**
+- [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) `0.1.2-rc.1` 到 `0.2.1-rc.x`，带
+  `web` 和/或 `headless` profile。两条 API 线都支持：0.1.x 上插件会注册自己的设置分区；0.2.x 移除了该注册接口，
+  插件改为读取入口配置与 GUI 卡片写入的凭据引用。**已在 DeepSeek Harness 桌面版（Node 24 / 自带 corepack pnpm）实测。**
 - 一个 [AnySearch](https://anysearch.com) API Key（低额度匿名使用可不配 Key；建议配置以保证稳定）。
 - 构建需要 Node.js `>= 20` 与 `pnpm`（Harness 桌面版自带）。
 
@@ -136,7 +137,8 @@ installer 还会自动设置 `searchProvider: anysearch`，因此无需手动编
 
 1. 硬编码默认值（`https://api.anysearch.com`、`maxResults` 10、`format` json）
 2. 启动环境变量（`ANYSEARCH_API_KEY`、`ANYSEARCH_BASE_URL`、…）
-3. `<DSH_HOME>/settings.yaml` 中的 `web-search-anysearch` 段
+3. `<DSH_HOME>/settings.yaml` 中的 `web-search-anysearch` 段（仅 Harness 0.1.x；0.2.x 移除了设置分区，
+   该版本下只有插件入口自身的配置这一层文件配置）
 4. GUI 写入的 credentials-service 引用（最高）
 
 | 字段 | 默认值 | 说明 |

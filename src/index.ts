@@ -14,7 +14,9 @@
  *
  * 1. Hard-coded defaults (base URL `https://api.anysearch.com`, `maxResults` 10, `format` json)
  * 2. Launching environment (`ANYSEARCH_API_KEY`, `ANYSEARCH_BASE_URL`, ...)
- * 3. The `web-search-anysearch` settings section (`~/.dsh/settings.yaml`)
+ * 3. The `web-search-anysearch` settings section (`~/.dsh/settings.yaml`) on
+ *    Harness 0.1.x. 0.2.x removed that installer; there the entry's own config
+ *    is the only file-level layer, and the GUI card writes the references below.
  * 4. Credentials service references written by the GUI card
  *    (`ANYSEARCH_API_KEY`, `ANYSEARCH_BASE_URL`, `ANYSEARCH_MAX_RESULTS`,
  *    `ANYSEARCH_ZONE`, `ANYSEARCH_LANGUAGE`, `ANYSEARCH_FORMAT`) - the API key
@@ -297,8 +299,32 @@ export const WEB_SEARCH_ANYSEARCH_SETTINGS_NAMESPACE = 'web-search-anysearch';
 /** Register the AnySearch search provider with `ctx.web`. */
 export function apply(ctx: import('@deepseek-ai/cordis').Context, config: z.Infer<typeof Config>): void {
   let current: () => z.Infer<typeof Config> = () => config;
+
+  // Harness <= 0.1.x exposed a settings-section installer on the settings
+  // service; 0.2.x removed it (configuration now reaches `apply` through the
+  // loader, and the settings page is a client-side slot). Feature-detect the
+  // method rather than compare version strings, so one build serves both lines:
+  // on 0.2.x this is a no-op and the provider keeps projecting `config`, on
+  // 0.1.x an edited section is still re-read per search.
   ctx.inject(['settings'], (settingsCtx) => {
-    settingsCtx.settings.installSection(
+    const service = settingsCtx.settings as unknown as
+      | {
+          installSection?: (
+            owner: unknown,
+            namespace: string,
+            schema: unknown,
+            initial: unknown,
+            hooks: {
+              setSource: (source: () => z.Infer<typeof Config>) => void;
+              onChange: () => void;
+            },
+          ) => void;
+        }
+      | undefined;
+    const installSection = service?.installSection;
+    if (typeof installSection !== 'function') return;
+    installSection.call(
+      service,
       ctx,
       WEB_SEARCH_ANYSEARCH_SETTINGS_NAMESPACE,
       Config,

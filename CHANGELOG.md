@@ -4,6 +4,24 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+Compatibility with the DeepSeek Harness `0.2.1-rc.x` API line.
+
+### Fixed
+
+- Load on Harness 0.2.x. `apply` called `ctx.settings.installSection` unconditionally, but 0.2.x
+  removed that method; the call threw inside `ctx.inject(['settings'], …)` before
+  `registerSearchProvider` ran, so the provider never registered and every search failed with
+  `WEB_PROVIDER_UNAVAILABLE`. The installer is now feature-detected: 0.1.x still gets its settings
+  section, 0.2.x skips it and keeps reading the entry config plus the GUI card's credential refs.
+- Peer ranges now accept both API lines (`^0.1.2-rc.1 || ^0.2.1-rc.3`), so `dsh plugin add` no
+  longer rejects the package as incompatible on 0.2.x.
+
+### Added
+
+- Regression test covering a settings service with and without the legacy installer.
+
 ## [0.1.2] - 2026-09-08
 
 Compatibility fixes for harness API changes.

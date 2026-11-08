@@ -52,9 +52,11 @@ installer** (see [Installation](#installation)). The Windows installer flow is:
 
 ## Requirements
 
-- [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) `>= 0.1.2-rc.1` with a `web` and/or
-  `headless` profile. **Tested with the DeepSeek Harness desktop install (Node 24 / pnpm via
-  corepack).**
+- [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) `0.1.2-rc.1` through
+  `0.2.1-rc.x` with a `web` and/or `headless` profile. Both API lines are supported: on 0.1.x the
+  plugin installs its settings section, on 0.2.x (which removed the installer) it reads the entry's
+  configuration and the credential references written by the GUI card. **Tested with the DeepSeek
+  Harness desktop install (Node 24 / pnpm via corepack).**
 - An [AnySearch](https://anysearch.com) API key (optional for low-rate anonymous use; recommended
   for reliable access).
 - Node.js `>= 20` and `pnpm` for the build step (the Harness desktop bundle ships both).
@@ -143,7 +145,8 @@ Configuration precedence (lowest → highest):
 
 1. Hard-coded defaults (`https://api.anysearch.com`, `maxResults` 10, `format` json)
 2. Launching environment (`ANYSEARCH_API_KEY`, `ANYSEARCH_BASE_URL`, …)
-3. The `web-search-anysearch` section in `<DSH_HOME>/settings.yaml`
+3. The `web-search-anysearch` section in `<DSH_HOME>/settings.yaml` (Harness 0.1.x only; 0.2.x
+   removed settings sections, so there the plugin entry's own config is the only file-level layer)
 4. Credentials-service references written by the GUI (highest)
 
 | Field | Default | Notes |
